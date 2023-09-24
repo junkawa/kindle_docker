@@ -1,10 +1,12 @@
 FROM ubuntu:22.04
 
+# https://wiki.winehq.org/Ubuntu
 RUN apt update \
     && apt install -y --no-install-recommends wget ca-certificates \
     && dpkg --add-architecture i386 \
-    && wget -nc -O /usr/share/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
-    && wget -nc -P /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources \
+    && mkdir -pm755 /etc/apt/keyrings \
+    && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
+    && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources \
     && apt update \
     && apt install -y --install-recommends winehq-devel \
     && apt install -y --no-install-recommends winetricks \
